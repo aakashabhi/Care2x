@@ -9,8 +9,8 @@ class DatabaseService {
   List<Remedy> _RemedyListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Remedy(
-        title: doc.get('title') ?? '',
-        description: doc.get('description') ?? '',
+        title: doc.get('Title') ?? '',
+        description: doc.get('Description') ?? '',
       );
     }).toList();
   }
