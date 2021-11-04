@@ -1,10 +1,6 @@
-import 'package:care2x/Cart/viewCart.dart';
-import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'login/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: ViewRemedy(),
+      home: LoginPage(),
     );
   }
 }
