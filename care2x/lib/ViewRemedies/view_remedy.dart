@@ -1,5 +1,6 @@
 import 'package:care2x/ViewRemedies/Remedy_description.dart';
 import 'package:care2x/ViewRemedies/remedy.dart';
+import 'package:care2x/ViewRemedies/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,53 +36,58 @@ class _ViewRemedyState extends State<ViewRemedy> {
           });
     }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Remedies'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-        child: ListView.builder(
-            itemCount: remedies.length,
-            itemBuilder: (context, index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: ListTile(
-                  onTap: () {},
-                  title: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        remedies[index].title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        child: MaterialButton(
-                          onPressed: () =>
-                              _showDescriptionPanel(remedies[index]),
-                          color: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Text(
-                            "View Remedy",
-                            style: TextStyle(
-                              color: Colors.white,
+    // final remedies = Provider.of<List<Remedy>>(context);
+    return StreamProvider<List<Remedy>?>.value(
+      initialData: [],
+      value: DatabaseService().all_remedies,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Remedies'),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+          child: ListView.builder(
+              itemCount: remedies.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: ListTile(
+                    onTap: () {},
+                    title: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          remedies[index].title,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          child: MaterialButton(
+                            onPressed: () =>
+                                _showDescriptionPanel(remedies[index]),
+                            color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Text(
+                              "View Remedy",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+        ),
       ),
     );
   }
