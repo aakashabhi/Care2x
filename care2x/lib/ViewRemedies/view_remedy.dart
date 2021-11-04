@@ -1,6 +1,7 @@
 import 'package:care2x/ViewRemedies/Remedy_description.dart';
 import 'package:care2x/ViewRemedies/remedy.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewRemedy extends StatefulWidget {
   const ViewRemedy({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _ViewRemedyState extends State<ViewRemedy> {
         description:
             'Carrying even a few extra pounds contributes to high cholesterol. Small changes add up. If you drink sugary beverages, switch to tap water. Snack on air-popped popcorn or pretzels — but keep track of the calories. If you crave something sweet, try sherbet or candies with little or no fat, such as jelly beans.'),
   ];
+
   @override
   Widget build(BuildContext context) {
     void _showDescriptionPanel(Remedy Rem) {
