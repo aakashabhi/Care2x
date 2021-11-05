@@ -1,7 +1,17 @@
+import 'package:care2x/login/next_pages/customer/customer_nextpage.dart';
+import 'package:care2x/login/next_pages/doctor/doctor_nextpage.dart';
+import 'package:care2x/session_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'models/customer.dart';
+import 'models/doctor.dart';
 import 'mytextfield.dart';
+import 'package:toggle_switch/toggle_switch.dart';
+
+import 'next_pages/customer/bloc/custdetails_bloc.dart';
+import 'next_pages/doctor/bloc/docdetails_bloc.dart';
 
 class SignUp extends StatefulWidget {
   static String pattern =
@@ -19,6 +29,8 @@ class _SignUpState extends State<SignUp> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  late bool isDoctor;
+  late bool isVendor;
 
   Future sendData() async {
     try {
@@ -28,32 +40,75 @@ class _SignUpState extends State<SignUp> {
         password: password.text,
       );
       var coll = await FirebaseFirestore.instance.collection('userData');
+
       await coll.doc(userCredential.user!.uid).set({
         "firstName": firstName.text.trim(),
         "lastName": lastName.text.trim(),
         "email": email.text.trim(),
         "userid": userCredential.user!.uid,
         "password": password.text.trim(),
+        "isDoctor": isDoctor,
+        "isVendor": isVendor
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Added Account Successfully"),
+            backgroundColor: Colors.green),
+      );
+      if (isDoctor == false && isVendor == false) {
+        RepositoryProvider.of<SessionRepository>(context).loggedinCustomer =
+            Customer(
+                firstname: firstName.text.trim(),
+                lastname: lastName.text.trim(),
+                email: email.text.trim(),
+                address: "",
+                phonenumber: "");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => CustdetailsBloc(email: email.text.trim()),
+              child: CustNextPage(),
+            ),
+          ),
+        );
+      } else if (isDoctor == true && isVendor == false) {
+        RepositoryProvider.of<SessionRepository>(context).loggedinDoctor =
+            Doctor(
+                firstname: firstName.text.trim(),
+                lastname: lastName.text.trim(),
+                email: email.text.trim(),
+                hospitaladdress: "",
+                specialisation: "",
+                phoneno: "");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => DocdetailsBloc(email: email.text.trim()),
+              child: DoctorNextPage(),
+            ),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("The password provided is too weak."),
-          ),
+              content: Text("The password provided is too weak."),
+              backgroundColor: Colors.red),
         );
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("The account already exists for that email"),
-          ),
+              content: Text("The account already exists for that email"),
+              backgroundColor: Colors.red),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e as String),
-        ),
+        SnackBar(content: Text(e as String), backgroundColor: Colors.red),
       );
       setState(() {
         loading = false;
@@ -68,49 +123,49 @@ class _SignUpState extends State<SignUp> {
     if (firstName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "First Name is Empty",
-          ),
-        ),
+            content: Text(
+              "First Name is Empty",
+            ),
+            backgroundColor: Colors.red),
       );
       return;
     }
     if (lastName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "Last Name is Empty",
-          ),
-        ),
+            content: Text(
+              "Last Name is Empty",
+            ),
+            backgroundColor: Colors.red),
       );
       return;
     }
     if (email.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "Email is Empty",
-          ),
-        ),
+            content: Text(
+              "Email is Empty",
+            ),
+            backgroundColor: Colors.red),
       );
       return;
     } else if (!regExp.hasMatch(email.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "Please enter vaild Email",
-          ),
-        ),
+            content: Text(
+              "Please enter vaild Email",
+            ),
+            backgroundColor: Colors.red),
       );
       return;
     }
     if (password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            "Password is Empty",
-          ),
-        ),
+            content: Text(
+              "Password is Empty",
+            ),
+            backgroundColor: Colors.red),
       );
       return;
     } else {
@@ -127,7 +182,7 @@ class _SignUpState extends State<SignUp> {
       required Color textColor,
       required Function ontap}) {
     return Container(
-      width: 120,
+      width: 150,
       child: RaisedButton(
         color: color,
         shape: RoundedRectangleBorder(
@@ -135,7 +190,7 @@ class _SignUpState extends State<SignUp> {
         ),
         child: Text(
           buttonName,
-          style: TextStyle(fontSize: 20, color: textColor),
+          style: TextStyle(fontSize: 16, color: textColor),
         ),
         onPressed: () {
           ontap();
@@ -200,6 +255,42 @@ class _SignUpState extends State<SignUp> {
                       controller: password,
                       obscureText: true,
                       hintText: 'Password',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Register As",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        ToggleSwitch(
+                          initialLabelIndex: 0,
+                          totalSwitches: 3,
+                          minWidth: 65,
+                          labels: ['Doctor', 'Customer', 'Retailer'],
+                          activeBgColor: [Colors.white],
+                          activeFgColor: Colors.black,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.grey[900],
+                          onToggle: (index) {
+                            if (index == 0) {
+                              isDoctor = true;
+                              isVendor = false;
+                            } else if (index == 1) {
+                              isDoctor = false;
+                              isVendor = false;
+                            } else if (index == 2) {
+                              isDoctor = false;
+                              isVendor = true;
+                            }
+                          },
+                          fontSize: 10,
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -218,7 +309,7 @@ class _SignUpState extends State<SignUp> {
                           ontap: () {
                             validation();
                           },
-                          buttonName: "Register",
+                          buttonName: "Register Now!",
                           color: Colors.red,
                           textColor: Colors.white,
                         ),
