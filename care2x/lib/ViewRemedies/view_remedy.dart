@@ -23,6 +23,7 @@ class _ViewRemedyState extends State<ViewRemedy> {
           title: Text('Remedies'),
           centerTitle: true,
           backgroundColor: Colors.blue,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
