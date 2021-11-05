@@ -15,12 +15,23 @@ class MyTextField extends StatelessWidget {
       obscureText: obscureText,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
+        
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.white),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
-          ),
+        
+        hintStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 14.0,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide:
+              BorderSide(color: Colors.white, width: 2),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide:
+              BorderSide(color: Colors.white , width: 1.5),
+          borderRadius: BorderRadius.circular(10.0),
         ),
       ),
     );
