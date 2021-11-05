@@ -1,3 +1,4 @@
+import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/login/signup.dart';
 import 'package:care2x/view_appointments/view_appointments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -88,6 +89,12 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       print("Success");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ViewRemedy(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       print("DED");
       if (e.code == 'user-not-found') {
