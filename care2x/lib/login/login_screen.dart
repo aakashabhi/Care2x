@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } else if (correctrecord['isVendor'] == true) {
-        // TODO: Make Vendor data accessible
+        // TODO: Push Vendor Screen and data visible
       } else {
         var custcoll = await FirebaseFirestore.instance
             .collection('customers')
@@ -166,8 +166,7 @@ class _LoginPageState extends State<LoginPage> {
       key: globalKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+        backgroundColor: Colors.black,automaticallyImplyLeading: false,      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
