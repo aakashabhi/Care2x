@@ -206,6 +206,7 @@ class _SignUpState extends State<SignUp> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
