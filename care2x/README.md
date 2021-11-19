@@ -1,4 +1,4 @@
-# care2x
+# se_theory
 
 A new Flutter project.
 
