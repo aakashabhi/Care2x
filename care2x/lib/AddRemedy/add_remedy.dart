@@ -23,19 +23,21 @@ class _AddRemedyState extends State<AddRemedy> {
             color: Colors.blue,
             child: Center(
               child: SpinKitChasingDots(
-                color: Colors.blue,
+                color: Color.fromRGBO(58, 66, 86, 1.0),
                 size: 50.0,
               ),
             ),
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.blue,
               elevation: 0.0,
               title: Text('Add Remedy'),
+              backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+              automaticallyImplyLeading: false,
             ),
+            backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
             body: Container(
-              color: Colors.blue[50],
+              color: Color.fromRGBO(58, 66, 86, 0.05),
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                 key: _formKey,
@@ -62,12 +64,18 @@ class _AddRemedyState extends State<AddRemedy> {
                       onChanged: (val) {
                         setState(() => description = val);
                       },
+                      maxLines: 5,
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height:40.0),
                     ElevatedButton(
                         child: Text(
                           'Submit',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.white,
+                          ),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {

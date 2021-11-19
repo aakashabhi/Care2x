@@ -1,4 +1,5 @@
 import 'package:care2x/login/login_screen.dart';
+import 'package:care2x/restart_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +7,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'login/signup.dart';
 import 'session_repo.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(new HotRestartController(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
