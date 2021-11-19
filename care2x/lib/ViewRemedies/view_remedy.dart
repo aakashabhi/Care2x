@@ -18,11 +18,11 @@ class _ViewRemedyState extends State<ViewRemedy> {
       initialData: [],
       value: DatabaseService().all_remedies,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
         appBar: AppBar(
           title: Text('Remedies'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
           automaticallyImplyLeading: false,
         ),
         body: Padding(

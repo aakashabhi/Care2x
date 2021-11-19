@@ -1,4 +1,5 @@
 import 'package:care2x/ViewRemedies/view_remedy.dart';
+import 'package:care2x/screens/doctor_screen.dart';
 import 'package:care2x/login/signup.dart';
 import 'package:care2x/view_appointments/view_appointments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => ViewAppointments(),
+            builder: (_) => DoctorScreen(),
           ),
         );
       } else if (correctrecord['isVendor'] == true) {
@@ -82,6 +83,12 @@ class _LoginPageState extends State<LoginPage> {
                 email: correctrecord['email'],
                 address: correctcustrecord['address'],
                 phonenumber: correctcustrecord['phone']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ViewRemedy(),
+          ),
+        );
       }
 
       globalKey.currentState!.showSnackBar(
@@ -89,12 +96,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       print("Success");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ViewRemedy(),
-        ),
-      );
+      print("Success");
     } on FirebaseAuthException catch (e) {
       print("DED");
       if (e.code == 'user-not-found') {
@@ -175,10 +177,10 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.only(right: 170),
               child: Text(
-                "Login ",
+                "Login",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 40,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                 ),
               ),

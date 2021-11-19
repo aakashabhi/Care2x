@@ -26,7 +26,8 @@ class _RemedyListState extends State<RemedyList> {
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
               child: Description(rem: Rem),
             );
-          });
+          },
+          backgroundColor: Color.fromRGBO(255,255,255, 1.0).withOpacity(0.85));
     }
 
     return ListView.builder(
@@ -36,32 +37,37 @@ class _RemedyListState extends State<RemedyList> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: ListTile(
-              onTap: () {},
-              title: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    remedies[index].title,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    child: MaterialButton(
-                      onPressed: () => _showDescriptionPanel(remedies[index]),
-                      color: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Text(
-                        "View Remedy",
-                        style: TextStyle(
-                          color: Colors.white,
+            child: Ink(
+              color:Color.fromRGBO(58, 66, 86, 1.0).withOpacity(0.4),
+              child: ListTile(
+                onTap: () {
+                  _showDescriptionPanel(remedies[index]);
+                },
+                title: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      remedies[index].title,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      child: MaterialButton(
+                        onPressed: () => _showDescriptionPanel(remedies[index]),
+                        color: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Text(
+                          "View Remedy",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
