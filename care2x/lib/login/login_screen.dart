@@ -1,3 +1,4 @@
+import 'package:care2x/Order_history/order_history.dart';
 import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/screens/doctor_screen.dart';
 import 'package:care2x/login/signup.dart';
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => ViewRemedy(),
+            builder: (_) => Test(),
           ),
         );
       }
@@ -166,7 +167,9 @@ class _LoginPageState extends State<LoginPage> {
       key: globalKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,automaticallyImplyLeading: false,      ),
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
