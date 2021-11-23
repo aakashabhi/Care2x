@@ -9,8 +9,30 @@ class SubCategoery extends StatefulWidget {
   _SubCategoryClassState createState() => _SubCategoryClassState();
 }
 
+//Map<string,Map<dynamic,dynamic>>
+
 class _SubCategoryClassState extends State<SubCategoery> {
   final db = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    () async {
+      var collection = FirebaseFirestore.instance.collection('products');
+      var querySnapshots = await collection.get();
+      for (var snapshot in querySnapshots.docs) {
+        var documentID = snapshot.id; // <-- Document ID
+        var x = snapshot.data();
+        print("**********");
+        print(documentID);
+        print(x['description']);
+        print("**********");
+      }
+      setState(() {});
+    }();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

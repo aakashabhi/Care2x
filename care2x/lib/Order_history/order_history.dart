@@ -41,36 +41,41 @@ class _TestState extends State<Test> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: GestureDetector(
-                          onTap: () {
-                            print("**************");
-                            print(temp.id);
-                            print(RepositoryProvider.of<SessionRepository>(
-                                    context)
-                                .loggedinCustomer
-                                .email);
-                            print("**************");
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SubCategoery(temp.id)),
-                            );
-                          },
-                          child: ListTile(
-                            title: Column(
-                              children: <Widget>[
-                                Text(temp['email']),
-                                SizedBox(
-                                  height: 10.0,
+                        child: ListTile(
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(temp['email']),
+                              Container(
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SubCategoery(temp.id)),
+                                    );
+                                  },
+                                  color: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Text(
+                                    "Details",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );
                   });
             } else {
-              return Text('Loading');
+              return LinearProgressIndicator();
             }
           },
         ),
