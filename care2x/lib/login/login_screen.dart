@@ -1,4 +1,5 @@
 import 'package:care2x/ViewRemedies/view_remedy.dart';
+import 'package:care2x/screens/customer_screen.dart';
 import 'package:care2x/screens/doctor_screen.dart';
 import 'package:care2x/login/signup.dart';
 import 'package:care2x/view_appointments/view_appointments.dart';
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => ViewRemedy(),
+            builder: (_) => CustomerScreen(),
           ),
         );
       }

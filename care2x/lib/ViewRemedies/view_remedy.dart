@@ -26,18 +26,7 @@ class _ViewRemedyState extends State<ViewRemedy> {
           centerTitle: true,
           backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
           automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ViewProductsScreen(),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.add))
-          ],
+          
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
