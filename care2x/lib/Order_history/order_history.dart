@@ -1,3 +1,4 @@
+import 'package:care2x/Order_history/subCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -26,15 +27,27 @@ class _TestState extends State<Test> {
                   itemBuilder: (context, index) {
                     var temp = snapshot.data!.docs[index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(0),
                       child: Card(
-                        child: Column(
-                          children: <Widget>[
-                            Text(temp['email']),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            print("**************");
+                            print(temp.id);
+                            print("**************");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SubCategoery(temp.id)),
+                            );
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              Text(temp['email']),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

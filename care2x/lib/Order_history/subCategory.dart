@@ -15,14 +15,14 @@ class _SubCategoryClassState extends State<SubCategoery> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SubCategories"),
+        title: Text("Ordered Items"),
         centerTitle: true,
       ),
       body: new StreamBuilder<QuerySnapshot>(
         stream: db
             .collection('orders')
             .doc(widget.doc)
-            .collection('TestSubCollection')
+            .collection('items')
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -35,7 +35,7 @@ class _SubCategoryClassState extends State<SubCategoery> {
                     child: Card(
                       child: Column(
                         children: <Widget>[
-                          Text(temp['quantity']),
+                          Text(temp['quantity'].toString()),
                           SizedBox(
                             height: 10.0,
                           ),
