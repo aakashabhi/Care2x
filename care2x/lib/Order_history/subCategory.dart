@@ -33,13 +33,15 @@ class _SubCategoryClassState extends State<SubCategoery> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          Text(temp['quantity'].toString()),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
+                      child: ListTile(
+                        title: Column(
+                          children: <Widget>[
+                            Text(temp['quantity'].toString()),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

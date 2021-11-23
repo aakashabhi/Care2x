@@ -38,6 +38,9 @@ class _TestState extends State<Test> {
                       );
                     else
                       return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                         child: GestureDetector(
                           onTap: () {
                             print("**************");
@@ -53,13 +56,15 @@ class _TestState extends State<Test> {
                                   builder: (context) => SubCategoery(temp.id)),
                             );
                           },
-                          child: Column(
-                            children: <Widget>[
-                              Text(temp['email']),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                            ],
+                          child: ListTile(
+                            title: Column(
+                              children: <Widget>[
+                                Text(temp['email']),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );

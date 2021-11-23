@@ -25,5 +25,4 @@ class SessionRepository {
 
     print(doctorappointments);
   }
-  
 }
