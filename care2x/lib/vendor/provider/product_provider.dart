@@ -5,6 +5,10 @@ import 'package:flutter/cupertino.dart';
 class ProductProvider extends ChangeNotifier {
   final String vendorId;
 
+  String name = '', description = '';
+  double price = 0.0;
+  bool inStock = false;
+
   bool gotProducts = false;
 
   ProductProvider({required this.vendorId});
@@ -12,6 +16,19 @@ class ProductProvider extends ChangeNotifier {
   List<ProductModel> myProducts = <ProductModel>[];
 
   var productCollection = FirebaseFirestore.instance.collection('products');
+
+  void toggleInStock(bool val) {
+    inStock = val;
+    notifyListeners();
+  }
+
+  void setVariables(
+      String setName, String setDescription, double setPrice, bool setInStock) {
+    name = setName;
+    description = setDescription;
+    price = setPrice;
+    inStock = setInStock;
+  }
 
   Future<void> getProducts() async {
     var rawProducts =

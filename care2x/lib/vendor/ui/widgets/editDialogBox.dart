@@ -1,4 +1,6 @@
+import 'package:care2x/vendor/provider/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditDialogBox extends StatefulWidget {
   final String name, description;
@@ -17,21 +19,11 @@ class EditDialogBox extends StatefulWidget {
 }
 
 class _EditDialogBoxState extends State<EditDialogBox> {
-  late String name, description;
-  late double price;
-  late bool inStock;
-  
-  @override
-  void initState() {
-    name = widget.name;
-    description = widget.description;
-    price = widget.price;
-    inStock = widget.inStock;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final productProviderReadContext = context.read<ProductProvider>();
+    final productProviderWatchContext = context.watch<ProductProvider>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
@@ -48,9 +40,9 @@ class _EditDialogBoxState extends State<EditDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              name = val;
+              productProviderReadContext.name = val;
             },
-            initialValue: name,
+            initialValue: widget.name,
             decoration: InputDecoration(
                 labelText: 'Name',
                 border:
@@ -62,9 +54,9 @@ class _EditDialogBoxState extends State<EditDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              description = val;
+              productProviderReadContext.description = val;
             },
-            initialValue: description,
+            initialValue: widget.description,
             decoration: InputDecoration(
                 labelText: 'Description',
                 border:
@@ -76,9 +68,13 @@ class _EditDialogBoxState extends State<EditDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              price = double.parse(val);
+              if (val != "") {
+                productProviderReadContext.price = double.parse(val);
+              } else {
+                productProviderReadContext.price = 0.0;
+              }
             },
-            initialValue: price.toString(),
+            initialValue: widget.price.toString(),
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 labelText: 'Price',
@@ -91,12 +87,10 @@ class _EditDialogBoxState extends State<EditDialogBox> {
           ),
           CheckboxListTile(
             title: Text('In Stock'),
-            value: inStock,
-            selected: inStock,
+            value: productProviderWatchContext.inStock,
             onChanged: (val) {
-              setState(() {
-                inStock = val!;
-              });
+              productProviderReadContext
+                  .toggleInStock(!productProviderReadContext.inStock);
             },
             checkColor: Colors.green,
             activeColor: Colors.black,

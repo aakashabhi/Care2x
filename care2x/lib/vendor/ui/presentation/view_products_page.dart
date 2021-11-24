@@ -30,20 +30,23 @@ class _ViewProductsPageState extends State<ViewProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var productProviderContext = context.watch<ProductProvider>();
-    List<ProductModel> products = productProviderContext.myProducts;
+    var productProviderWatchContext = context.watch<ProductProvider>();
+    var productProviderReadContext = context.read<ProductProvider>();
+
+    List<ProductModel> products = productProviderWatchContext.myProducts;
     print('building product');
     print('jjh ' + products.length.toString());
-    print(productProviderContext.gotProducts);
+    print(productProviderWatchContext.gotProducts);
     return Scaffold(
       appBar: AppBar(
         title: Text('Products'),
         backgroundColor: appBarColor,
       ),
-      body: productProviderContext.gotProducts
+      body: productProviderWatchContext.gotProducts
           ? (products.length > 0
               ? ListView.builder(
                   itemBuilder: (context, index) {
+                    print(products[index].name);
                     return ProductCard(product: products[index]);
                   },
                   itemCount: products.length,
@@ -58,24 +61,26 @@ class _ViewProductsPageState extends State<ViewProductsPage> {
             ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          String name = '', description = '';
-          double price = 0.0;
-          bool inStock = false;
+          productProviderReadContext.setVariables('', '', 0.0, false);
           AwesomeDialog(
             context: context,
             animType: AnimType.SCALE,
             dialogType: DialogType.INFO,
-            body: AddDialogBox(),
+            body: ChangeNotifierProvider.value(
+              value: productProviderReadContext,
+              child: AddDialogBox(),
+            ),
             btnOk: MaterialButton(
               onPressed: () {
-                context.read<ProductProvider>().addProduct(ProductModel(
-                    id: '',
-                    name: name,
-                    description: description,
-                    vendorId: context.read<ProductProvider>().vendorId,
-                    imageURL: dummyImageUrl,
-                    price: price,
-                    inStock: inStock));
+                productProviderReadContext.addProduct(ProductModel(
+                  id: '',
+                  name: productProviderReadContext.name,
+                  description: productProviderReadContext.description,
+                  vendorId: productProviderReadContext.vendorId,
+                  imageURL: dummyImageUrl,
+                  price: productProviderReadContext.price,
+                  inStock: productProviderReadContext.inStock,
+                ));
                 Navigator.of(context).pop();
               },
               child: Text(

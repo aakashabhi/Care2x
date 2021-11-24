@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:care2x/constants/constants.dart';
 import 'package:care2x/vendor/models/product_model.dart';
 import 'package:care2x/vendor/provider/product_provider.dart';
+import 'package:care2x/vendor/ui/widgets/editDialogBox.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
+    var productProviderReadContext = context.read<ProductProvider>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Card(
@@ -32,11 +34,19 @@ class _ProductCardState extends State<ProductCard> {
               ),
             ),
             children: [
-              ListTile(
-                title: Text(
-                  widget.product.description,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
+              Text(
+                'Description: ' + widget.product.description,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                'Price: ' + widget.product.price.toString(),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 7,
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -49,22 +59,26 @@ class _ProductCardState extends State<ProductCard> {
                           description = widget.product.description;
                       double price = widget.product.price;
                       bool inStock = widget.product.inStock;
+                      productProviderReadContext.setVariables(
+                          name, description, price, inStock);
                       AwesomeDialog(
                         context: context,
                         animType: AnimType.SCALE,
                         dialogType: DialogType.INFO,
                         btnOk: MaterialButton(
                           onPressed: () {
-                            context.read<ProductProvider>().editProduct(
+                            productProviderReadContext.editProduct(
                                 widget.product.id,
                                 ProductModel(
                                     id: widget.product.id,
-                                    name: name,
-                                    description: description,
+                                    name: productProviderReadContext.name,
+                                    description:
+                                        productProviderReadContext.description,
                                     vendorId: widget.product.vendorId,
                                     imageURL: dummyImageUrl,
-                                    price: price,
-                                    inStock: inStock));
+                                    price: productProviderReadContext.price,
+                                    inStock:
+                                        productProviderReadContext.inStock));
                             Navigator.of(context).pop();
                           },
                           child: Text(
@@ -72,6 +86,15 @@ class _ProductCardState extends State<ProductCard> {
                             style: TextStyle(color: Colors.white),
                           ),
                           color: Colors.black,
+                        ),
+                        body: ChangeNotifierProvider.value(
+                          value: productProviderReadContext,
+                          child: EditDialogBox(
+                            description: widget.product.description,
+                            inStock: widget.product.inStock,
+                            name: widget.product.name,
+                            price: widget.product.price,
+                          ),
                         ),
                         btnCancel: MaterialButton(
                           onPressed: () {

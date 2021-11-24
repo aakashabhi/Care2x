@@ -1,4 +1,6 @@
+import 'package:care2x/vendor/provider/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddDialogBox extends StatefulWidget {
   const AddDialogBox({
@@ -10,12 +12,11 @@ class AddDialogBox extends StatefulWidget {
 }
 
 class _AddDialogBoxState extends State<AddDialogBox> {
-  String name = '', description = '';
-  double price = 0.0;
-  bool inStock = false;
-
   @override
   Widget build(BuildContext context) {
+    final productProviderReadContext = context.read<ProductProvider>();
+    final productProviderWatchContext = context.watch<ProductProvider>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
@@ -32,7 +33,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              name = val;
+              productProviderReadContext.name = val;
             },
             decoration: InputDecoration(
                 labelText: 'Name',
@@ -45,7 +46,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              description = val;
+              productProviderReadContext.description = val;
             },
             decoration: InputDecoration(
                 labelText: 'Description',
@@ -58,7 +59,7 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
           TextFormField(
             onChanged: (val) {
-              price = double.parse(val);
+              productProviderReadContext.price = double.parse(val);
             },
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -72,11 +73,10 @@ class _AddDialogBoxState extends State<AddDialogBox> {
           ),
           CheckboxListTile(
             title: Text('In Stock'),
-            value: inStock,
+            value: productProviderWatchContext.inStock,
             onChanged: (val) {
-              setState(() {
-                inStock = val!;
-              });
+              productProviderReadContext
+                  .toggleInStock(!productProviderReadContext.inStock);
             },
             checkColor: Colors.green,
             activeColor: Colors.black,
