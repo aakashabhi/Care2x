@@ -89,6 +89,27 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         Row(
                           children: [
                             Icon(
+                              Icons.house,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              'Address: ' + widget.order.address,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
                               Icons.money,
                               color: Colors.blue[200],
                             ),

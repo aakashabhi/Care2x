@@ -1,23 +1,26 @@
+import 'package:care2x/Cart/provider/cart_provider.dart';
+import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/constants/constants.dart';
-import 'package:care2x/vendor/provider/order_provider.dart';
-import 'package:care2x/vendor/provider/product_provider.dart';
-import 'package:care2x/vendor/ui/presentation/view_orders_page.dart';
+import 'package:care2x/login/models/customer.dart';
+import 'package:care2x/session_repo.dart';
 import 'package:care2x/vendor/ui/presentation/view_products_page.dart';
+import 'package:care2x/view_products/viewproducts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-class VendorHomePage extends StatefulWidget {
-  final String vendorId;
-  const VendorHomePage({Key? key, required this.vendorId}) : super(key: key);
+class CustomerHomePage extends StatefulWidget {
+  const CustomerHomePage({Key? key}) : super(key: key);
 
   @override
-  State<VendorHomePage> createState() => _VendorHomePageState();
+  _CustomerHomePageState createState() => _CustomerHomePageState();
 }
 
-class _VendorHomePageState extends State<VendorHomePage> {
+class _CustomerHomePageState extends State<CustomerHomePage> {
   @override
   Widget build(BuildContext context) {
+    Customer customer =
+        RepositoryProvider.of<SessionRepository>(context).loggedinCustomer;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -25,17 +28,17 @@ class _VendorHomePageState extends State<VendorHomePage> {
         backgroundColor: appBarColor,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => ChangeNotifierProvider(
-                        create: (context) =>
-                            OrderProvider(vendorId: widget.vendorId),
-                        child: ViewOrdersPage())));
+                  builder: (_) => ChangeNotifierProvider(
+                    create: (context) => CartProvider(customer: customer),
+                    child: ViewProductsScreen(),
+                  ),
+                ));
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -44,7 +47,7 @@ class _VendorHomePageState extends State<VendorHomePage> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 child: Text(
-                  'View Orders',
+                  'View Products',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -54,23 +57,21 @@ class _VendorHomePageState extends State<VendorHomePage> {
               color: buttonColor,
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => ChangeNotifierProvider<ProductProvider>(
-                        create: (context) =>
-                            ProductProvider(vendorId: widget.vendorId),
-                        child: ViewProductsPage())));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => ViewRemedy()));
               },
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
+                borderRadius: BorderRadius.circular(5),
+              ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 child: Text(
-                  'View Products',
+                  'View Remedies',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

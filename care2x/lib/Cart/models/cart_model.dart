@@ -1,8 +1,6 @@
-import 'package:care2x/vendor/models/item_model.dart';
+import 'package:care2x/Cart/models/cart_item_model.dart';
 
 class CartModel {
-  final List<ItemModel> items;
-  final double total;
-
-  CartModel({required this.items, required this.total});
+  List<CartItemModel> items = <CartItemModel>[];
+  late double total;
 }

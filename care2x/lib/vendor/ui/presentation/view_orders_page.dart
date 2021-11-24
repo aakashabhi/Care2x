@@ -30,24 +30,31 @@ class _ViewOrdersPageState extends State<ViewOrdersPage> {
     print('bulidng orders');
     print('hhy ' + orders.length.toString());
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: Text('Orders'),
-        backgroundColor: appBarColor,
-      ),
-      body: orders.length > 0
-          ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return OrderCard(order: orders[index], index: index);
-                },
-                itemCount: orders.length,
-              ),
-            )
-          : SpinKitCircle(
-              color: Colors.black,
-            ),
-    );
+        backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+          title: Text('Orders'),
+          backgroundColor: appBarColor,
+        ),
+        body: context.watch<OrderProvider>().gotOrders == true
+            ? (orders.length > 0
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        return OrderCard(order: orders[index], index: index);
+                      },
+                      itemCount: orders.length,
+                    ),
+                  )
+                : SpinKitCircle(
+                    color: Colors.black,
+                  ))
+            : Center(
+                child: Text(
+                  'No Orders',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ));
   }
 }

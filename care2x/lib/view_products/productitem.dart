@@ -1,4 +1,6 @@
+import 'package:care2x/Cart/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   final String id;
@@ -11,6 +13,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = context.read<CartProvider>();
+    print('printing id: ' + id);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -22,7 +26,7 @@ class ProductItem extends StatelessWidget {
               children: [
                 FadeInImage(
                   placeholder:
-                      AssetImage('assets/images/product-placeholder.png'),
+                      AssetImage('assets/images/product-placeholder.jpg'),
                   image: NetworkImage(imageUrl),
                   fit: BoxFit.cover,
                 ),
@@ -34,7 +38,7 @@ class ProductItem extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onPressed: () {
-                      // cart.addItem(product.id, product.price, product.title);
+                      cartProvider.addItemToCart(id, price, title);
                       Scaffold.of(context).hideCurrentSnackBar();
                       Scaffold.of(context).showSnackBar(
                         SnackBar(
@@ -45,7 +49,7 @@ class ProductItem extends StatelessWidget {
                           action: SnackBarAction(
                             label: 'UNDO',
                             onPressed: () {
-                              // cart.removeSingleItem(product.id);
+                              cartProvider.decrementItemQuantity(id);
                             },
                           ),
                         ),

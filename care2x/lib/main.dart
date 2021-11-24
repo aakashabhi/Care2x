@@ -34,9 +34,7 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
               primaryColor: Colors.black),
-          home: VendorHomePage(
-            vendorId: 'jXuhdZJgGUq2tMxKFXnl',
-          ),
+          home: WelcomePage(),
           builder: EasyLoading.init()),
     );
   }

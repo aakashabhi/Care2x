@@ -1,6 +1,7 @@
 import 'package:care2x/ViewRemedies/remedy.dart';
 import 'package:care2x/ViewRemedies/remedy_list.dart';
 import 'package:care2x/ViewRemedies/service.dart';
+import 'package:care2x/constants/constants.dart';
 import 'package:care2x/view_products/productsgrid.dart';
 import 'package:care2x/view_products/viewproducts_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,24 +21,11 @@ class _ViewRemedyState extends State<ViewRemedy> {
       initialData: [],
       value: DatabaseService().all_remedies,
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        backgroundColor: Colors.grey[200],
         appBar: AppBar(
           title: Text('Remedies'),
           centerTitle: true,
-          backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ViewProductsScreen(),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.add))
-          ],
+          backgroundColor: appBarColor,
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),

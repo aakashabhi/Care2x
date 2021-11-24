@@ -8,11 +8,14 @@ class OrderProvider extends ChangeNotifier {
   final String vendorId;
   var orderCollection = FirebaseFirestore.instance.collection("orders");
   var productCollection = FirebaseFirestore.instance.collection("products");
+  var customerCollection = FirebaseFirestore.instance.collection("customers");
 
   List<OrderModel> myOrders = [];
   List<ProductModel> myProducts = [];
 
   OrderProvider({required this.vendorId});
+
+  bool gotOrders = false;
 
   Future<void> getOrders() async {
     var rawProducts =
@@ -56,7 +59,14 @@ class OrderProvider extends ChangeNotifier {
         }
       }
       print('items length: ' + itemsList.length.toString());
+
+      var user = await customerCollection
+          .where('email', isEqualTo: order['email'])
+          .get();
+      String address = user.docs.first['address'];
+      print('address: ' + address);
       myOrders.add(OrderModel(
+          address: address,
           email: order['email'],
           isComplete: order['isComplete'],
           isUrgent: order['isUrgent'],
@@ -67,6 +77,7 @@ class OrderProvider extends ChangeNotifier {
 
     print('got my orders');
     print(myOrders.length);
+    gotOrders = true;
     notifyListeners();
     return;
   }

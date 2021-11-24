@@ -8,6 +8,7 @@ class OrderModel {
   final bool isUrgent;
   final DateTime orderDate;
   final double totalCost;
+  final String address;
   final List<ItemModel> items;
 
   OrderModel(
@@ -16,5 +17,6 @@ class OrderModel {
       required this.isUrgent,
       required this.orderDate,
       required this.totalCost,
-      required this.items});
+      required this.items,
+      required this.address});
 }
