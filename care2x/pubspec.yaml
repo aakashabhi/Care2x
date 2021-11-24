@@ -41,6 +41,8 @@ dependencies:
   flutter_bloc: ^7.3.0
   toggle_switch: ^1.2.0
 
+  awesome_dialog: ^2.1.1
+
 
 dev_dependencies:
   flutter_test:

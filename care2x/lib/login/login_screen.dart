@@ -1,6 +1,7 @@
 import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/screens/doctor_screen.dart';
 import 'package:care2x/login/signup.dart';
+import 'package:care2x/vendor/ui/presentation/vendor_home_page.dart';
 import 'package:care2x/view_appointments/view_appointments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         email: email.text,
         password: password.text,
       );
-      print(userCredential.user!.uid);
+      print("user: " + userCredential.user!.uid.toString());
 
       var coll = await FirebaseFirestore.instance
           .collection('userData')
@@ -68,7 +69,16 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } else if (correctrecord['isVendor'] == true) {
-        // TODO: Push Vendor Screen and data visible
+        print('vendor it is');
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VendorHomePage(
+              vendorId: coll.docs[0].id.toString(),
+            ),
+          ),
+        );
       } else {
         var custcoll = await FirebaseFirestore.instance
             .collection('customers')
@@ -166,7 +176,9 @@ class _LoginPageState extends State<LoginPage> {
       key: globalKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,automaticallyImplyLeading: false,      ),
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
