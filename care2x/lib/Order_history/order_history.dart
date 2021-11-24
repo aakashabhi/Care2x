@@ -1,3 +1,4 @@
+import 'package:care2x/Order_history/Order_detail.dart';
 import 'package:care2x/Order_history/subCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../session_repo.dart';
 
-class Test extends StatefulWidget {
+class OrderHistory extends StatefulWidget {
   @override
-  _TestState createState() => _TestState();
+  _OrderHistoryState createState() => _OrderHistoryState();
 }
 
-class _TestState extends State<Test> {
+class _OrderHistoryState extends State<OrderHistory> {
   final db = FirebaseFirestore.instance;
 
   @override
@@ -30,9 +31,10 @@ class _TestState extends State<Test> {
                   itemBuilder: (context, index) {
                     var temp = snapshot.data!.docs[index];
                     if (RepositoryProvider.of<SessionRepository>(context)
-                            .loggedinCustomer
-                            .email !=
-                        temp['email'])
+                                .loggedinCustomer
+                                .email !=
+                            temp['email'] ||
+                        temp['isComplete'] == false)
                       return SizedBox(
                         height: 0,
                       );
@@ -42,11 +44,13 @@ class _TestState extends State<Test> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: ListTile(
+                          subtitle: Text(
+                              "Total Cost: Rs." + temp['totalCost'].toString()),
                           title: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(temp['email']),
+                              OrderDetail(temp['orderDate']),
                               Container(
                                 child: MaterialButton(
                                   onPressed: () {

@@ -14,25 +14,24 @@ class SubCategoery extends StatefulWidget {
 class _SubCategoryClassState extends State<SubCategoery> {
   final db = FirebaseFirestore.instance;
   Map<String, Map<String, dynamic>> productInfo = {};
-
+  bool _isConnected = false;
   @override
   void initState() {
     () async {
       var collection = FirebaseFirestore.instance.collection('products');
       var querySnapshots = await collection.get();
       for (var snapshot in querySnapshots.docs) {
-        var documentID = snapshot.id; // <-- Document ID
+        var documentID = snapshot.id;
         var x = snapshot.data();
-        print("**********");
-        print(documentID);
         Map<String, dynamic> info = {};
         info['description'] = x['description'];
         info['name'] = x['name'];
         info['price'] = x['price'];
         productInfo[documentID] = info;
-        print("**********");
       }
-      setState(() {});
+      setState(() {
+        _isConnected = true;
+      });
     }();
 
     super.initState();
@@ -41,43 +40,53 @@ class _SubCategoryClassState extends State<SubCategoery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Ordered Items"),
-        centerTitle: true,
-      ),
-      body: new StreamBuilder<QuerySnapshot>(
-        stream: db
-            .collection('orders')
-            .doc(widget.doc)
-            .collection('items')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return new ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var temp = snapshot.data!.docs[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: ListTile(
-                        title: Column(
-                          children: <Widget>[
-                            Text(temp['productId'].toString()),
-                            SizedBox(
-                              height: 10.0,
+        appBar: AppBar(
+          title: Text("Ordered Items"),
+          centerTitle: true,
+        ),
+        body: (_isConnected == true)
+            ? StreamBuilder<QuerySnapshot>(
+                stream: db
+                    .collection('orders')
+                    .doc(widget.doc)
+                    .collection('items')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return new ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          var temp = snapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              child: ListTile(
+                                subtitle: Text(
+                                    "Quantity: " + temp['quantity'].toString()),
+                                title: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(productInfo[temp['productId']
+                                            .toString()]!['name']
+                                        .toString()),
+                                    Text("Rs." +
+                                        productInfo[temp['productId']
+                                                .toString()]!['price']
+                                            .toString() +
+                                        "/unit"),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                });
-          } else {
-            return LinearProgressIndicator();
-          }
-        },
-      ),
-    );
+                          );
+                        });
+                  } else {
+                    return LinearProgressIndicator();
+                  }
+                },
+              )
+            : LinearProgressIndicator());
   }
 }
