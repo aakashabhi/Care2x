@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SubCategoery extends StatefulWidget {
   final doc;
@@ -8,8 +9,6 @@ class SubCategoery extends StatefulWidget {
   @override
   _SubCategoryClassState createState() => _SubCategoryClassState();
 }
-
-//Map<string,Map<dynamic,dynamic>>
 
 class _SubCategoryClassState extends State<SubCategoery> {
   final db = FirebaseFirestore.instance;
@@ -40,9 +39,11 @@ class _SubCategoryClassState extends State<SubCategoery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
         appBar: AppBar(
           title: Text("Ordered Items"),
           centerTitle: true,
+          backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
         ),
         body: (_isConnected == true)
             ? StreamBuilder<QuerySnapshot>(
@@ -60,23 +61,36 @@ class _SubCategoryClassState extends State<SubCategoery> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Card(
-                              child: ListTile(
-                                subtitle: Text(
-                                    "Quantity: " + temp['quantity'].toString()),
-                                title: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(productInfo[temp['productId']
-                                            .toString()]!['name']
-                                        .toString()),
-                                    Text("Rs." +
+                              child: Ink(
+                                color: Color.fromRGBO(58, 66, 86, 1.0)
+                                    .withOpacity(0.4),
+                                child: ListTile(
+                                  subtitle: Text("Quantity: " +
+                                      temp['quantity'].toString()),
+                                  title: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
                                         productInfo[temp['productId']
-                                                .toString()]!['price']
-                                            .toString() +
-                                        "/unit"),
-                                  ],
+                                                .toString()]!['name']
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Rs. " +
+                                            productInfo[temp['productId']
+                                                    .toString()]!['price']
+                                                .toString() +
+                                            " per unit",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

@@ -3,6 +3,7 @@ import 'package:care2x/Order_history/subCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../session_repo.dart';
 
@@ -17,8 +18,11 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: new AppBar(
         title: new Text('Order History'),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
@@ -43,37 +47,41 @@ class _OrderHistoryState extends State<OrderHistory> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: ListTile(
-                          subtitle: Text(
-                              "Total Cost: Rs." + temp['totalCost'].toString()),
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              OrderDetail(temp['orderDate']),
-                              Container(
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SubCategoery(temp.id)),
-                                    );
-                                  },
-                                  color: Colors.red,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Text(
-                                    "Details",
-                                    style: TextStyle(
-                                      color: Colors.white,
+                        child: Ink(
+                          color:
+                              Color.fromRGBO(58, 66, 86, 1.0).withOpacity(0.4),
+                          child: ListTile(
+                            subtitle: Text("Total Cost: Rs." +
+                                temp['totalCost'].toString()),
+                            title: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                OrderDetail(temp['orderDate']),
+                                Container(
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SubCategoery(temp.id)),
+                                      );
+                                    },
+                                    color: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Text(
+                                      "Details",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
