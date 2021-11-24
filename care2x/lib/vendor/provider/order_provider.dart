@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 class OrderProvider extends ChangeNotifier {
   final String vendorId;
   var orderCollection = FirebaseFirestore.instance.collection("orders");
-  var productCollection = FirebaseFirestore.instance.collection("product");
+  var productCollection = FirebaseFirestore.instance.collection("products");
 
   List<OrderModel> myOrders = [];
   List<ProductModel> myProducts = [];
@@ -22,35 +22,40 @@ class OrderProvider extends ChangeNotifier {
     var rawOrders = await orderCollection.get();
     var rawOrdersList = rawOrders.docs.toList();
 
-    print(rawOrdersList.length);
+    print('rawproductlist length ' + rawProductList.length.toString());
 
-    rawProductList.forEach((element) {
+    for (int i = 0; i < rawProductList.length; i++) {
+      var rawProduct = rawProductList[i];
+      print('id: ' + rawProduct.id.toString());
       myProducts.add(ProductModel(
-          id: element.id,
-          name: element['name'],
-          description: element['description'],
-          vendorId: element['vendorId'],
-          imageURL: element['imageURL'],
-          price: element['price'].toDouble(),
-          inStock: element['inStock']));
-    });
+          id: rawProduct.id,
+          name: rawProduct['name'],
+          description: rawProduct['description'],
+          vendorId: rawProduct['vendorId'],
+          imageURL: rawProduct['imageUrl'],
+          price: rawProduct['price'].toDouble(),
+          inStock: rawProduct['inStock']));
+    }
 
     for (int j = 0; j < rawOrdersList.length; j++) {
       var order = rawOrdersList[j];
       var rawItems = await order.reference.collection("items").get();
       var rawItemsList = rawItems.docs.toList();
       List<ItemModel> itemsList = <ItemModel>[];
-      
+
+      print(order['email'] + ' : ' + rawItemsList.length.toString());
       for (int i = 0; i < rawItemsList.length; i++) {
         int index = myProducts.indexWhere(
             (element) => element.id == rawItemsList[i]['productId']);
+        print(rawItemsList[i]['productId'] + ' ' + index.toString());
         if (index >= 0) {
           itemsList.add(ItemModel(
               productId: rawItemsList[i]['productId'],
+              productName: myProducts[index].name,
               quantity: rawItemsList[i]['quantity']));
         }
       }
-
+      print('items length: ' + itemsList.length.toString());
       myOrders.add(OrderModel(
           email: order['email'],
           isComplete: order['isComplete'],
@@ -59,7 +64,7 @@ class OrderProvider extends ChangeNotifier {
           totalCost: order['totalCost'].toDouble(),
           items: itemsList));
     }
-  
+
     print('got my orders');
     print(myOrders.length);
     notifyListeners();
