@@ -63,7 +63,7 @@ class _SubCategoryClassState extends State<SubCategoery> {
                       child: ListTile(
                         title: Column(
                           children: <Widget>[
-                            Text(temp['quantity'].toString()),
+                            Text(temp['productId'].toString()),
                             SizedBox(
                               height: 10.0,
                             ),
