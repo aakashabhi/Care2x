@@ -167,7 +167,9 @@ class _LoginPageState extends State<LoginPage> {
       key: globalKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,automaticallyImplyLeading: false,      ),
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
