@@ -25,6 +25,7 @@ class _ViewRemedyState extends State<ViewRemedy> {
         appBar: AppBar(
           title: Text('Remedies'),
           centerTitle: true,
+
           backgroundColor: appBarColor,
         ),
         body: Padding(

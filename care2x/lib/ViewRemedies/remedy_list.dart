@@ -27,7 +27,8 @@ class _RemedyListState extends State<RemedyList> {
               child: Description(rem: Rem),
             );
           },
-          backgroundColor: Color.fromRGBO(255,255,255, 1.0).withOpacity(0.85));
+          backgroundColor:
+              Color.fromRGBO(255, 255, 255, 1.0).withOpacity(0.85));
     }
 
     return ListView.builder(
@@ -38,7 +39,7 @@ class _RemedyListState extends State<RemedyList> {
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Ink(
-              color:Color.fromRGBO(58, 66, 86, 1.0).withOpacity(0.4),
+              color: Color.fromRGBO(58, 66, 86, 1.0).withOpacity(0.4),
               child: ListTile(
                 onTap: () {
                   _showDescriptionPanel(remedies[index]);
