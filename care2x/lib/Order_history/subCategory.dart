@@ -13,6 +13,7 @@ class SubCategoery extends StatefulWidget {
 
 class _SubCategoryClassState extends State<SubCategoery> {
   final db = FirebaseFirestore.instance;
+  Map<String, Map<String, dynamic>> productInfo = {};
 
   @override
   void initState() {
@@ -24,7 +25,11 @@ class _SubCategoryClassState extends State<SubCategoery> {
         var x = snapshot.data();
         print("**********");
         print(documentID);
-        print(x['description']);
+        Map<String, dynamic> info = {};
+        info['description'] = x['description'];
+        info['name'] = x['name'];
+        info['price'] = x['price'];
+        productInfo[documentID] = info;
         print("**********");
       }
       setState(() {});
