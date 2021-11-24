@@ -1,6 +1,7 @@
 import 'package:care2x/login/login_screen.dart';
 import 'package:care2x/restart_controller.dart';
 import 'package:care2x/screens/welcome_page.dart';
+import 'package:care2x/vendor/ui/presentation/vendor_home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
