@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../../../restart_controller.dart';
+
 class VendorHomePage extends StatefulWidget {
   final String vendorId;
   const VendorHomePage({Key? key, required this.vendorId}) : super(key: key);
@@ -23,6 +25,13 @@ class _VendorHomePageState extends State<VendorHomePage> {
         automaticallyImplyLeading: false,
         title: Text('Home'),
         backgroundColor: appBarColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                HotRestartController.performHotRestart(context);
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
