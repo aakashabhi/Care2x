@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class CartCard extends StatefulWidget {
   final CartItemModel item;
-  
 
   const CartCard({Key? key, required this.item}) : super(key: key);
 
@@ -25,7 +24,11 @@ class _CartCardState extends State<CartCard> {
   @override
   Widget build(BuildContext context) {
     var cartProviderReadContext = context.read<CartProvider>();
+    print('printing card');
+    print(widget.item.productName);
+    print(widget.item.quantity);
     return Card(
+      key: widget.key,
       color: Colors.grey[500],
       child: ListTile(
           title: Text(
@@ -33,7 +36,7 @@ class _CartCardState extends State<CartCard> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           trailing: ElegantNumberButton(
-            key: ValueKey(widget.item.productId),
+            key: widget.key,
             color: Colors.white,
             buttonSizeWidth: 26,
             textStyle: TextStyle(

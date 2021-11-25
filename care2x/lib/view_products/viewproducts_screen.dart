@@ -24,39 +24,41 @@ class _ViewProductsScreenState extends State<ViewProductsScreen> {
           backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
           automaticallyImplyLeading: false,
           actions: [
-          IconButton(
-              onPressed: () {
-                HotRestartController.performHotRestart(context);
-              },
-              icon: Icon(Icons.logout))
-        ]),
+            IconButton(
+                onPressed: () {
+                  HotRestartController.performHotRestart(context);
+                },
+                icon: Icon(Icons.logout))
+          ]),
       body: ProductsGrid(),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            print('item length: ' +cartProviderReadContext.cartModel.items.length.toString());
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => ChangeNotifierProvider.value(
-                      value: cartProviderReadContext,
-                      child: ViewCart(),
-                    )));
-          },
-          backgroundColor: Colors.black,
-          label: Row(
-            children: [
-              Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-                size: 20,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                'Cart',
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
-          )),
     );
   }
 }
+
+
+// floatingActionButton: FloatingActionButton.extended(
+//           onPressed: () {
+//             print('item length: ' +cartProviderReadContext.cartModel.items.length.toString());
+//             Navigator.of(context).push(MaterialPageRoute(
+//                 builder: (_) => ChangeNotifierProvider.value(
+//                       value: cartProviderReadContext,
+//                       child: ViewCart(),
+//                     )));
+//           },
+//           backgroundColor: Colors.black,
+//           label: Row(
+//             children: [
+//               Icon(
+//                 Icons.shopping_cart,
+//                 color: Colors.white,
+//                 size: 20,
+//               ),
+//               SizedBox(
+//                 width: 10,
+//               ),
+//               Text(
+//                 'Cart',
+//                 style: TextStyle(fontSize: 18),
+//               ),
+//             ],
+//           )),

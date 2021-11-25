@@ -1,4 +1,5 @@
 import 'package:care2x/AddRemedy/add_remedy.dart';
+import 'package:care2x/Cart/ui/presentation/viewCart.dart';
 import 'package:care2x/Order_history/order_history.dart';
 import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/dummy_screens/my_cart.dart';
@@ -7,6 +8,7 @@ import 'package:care2x/view_appointments/view_appointments.dart';
 import 'package:care2x/view_products/viewproducts_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomerScreen extends StatefulWidget {
   CustomerScreen({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class CustomerScreen extends StatefulWidget {
     MyAppointmentsScreen(),
     ViewRemedy(),
     OrderHistory(),
-    MyCart()
+    ViewCart()
   ];
   var _currentIndex = 0;
 

@@ -1,14 +1,17 @@
+import 'package:care2x/Cart/provider/cart_provider.dart';
 import 'package:care2x/ViewRemedies/view_remedy.dart';
 import 'package:care2x/screens/customer_screen.dart';
 import 'package:care2x/screens/doctor_screen.dart';
 import 'package:care2x/login/signup.dart';
 import 'package:care2x/screens/home_page_customer.dart';
+import 'package:care2x/vendor/provider/order_provider.dart';
 import 'package:care2x/vendor/ui/presentation/vendor_home_page.dart';
 import 'package:care2x/view_appointments/view_appointments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import '../session_repo.dart';
 import 'models/customer.dart';
 import 'models/doctor.dart';
@@ -98,9 +101,11 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-
-            builder: (_) => CustomerScreen(),
-
+            builder: (_) => ChangeNotifierProvider(
+                create: (context) => CartProvider(
+                    customer: RepositoryProvider.of<SessionRepository>(context)
+                        .loggedinCustomer),
+                child: CustomerScreen()),
           ),
         );
       }
