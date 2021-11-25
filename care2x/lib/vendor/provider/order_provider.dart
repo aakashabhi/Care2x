@@ -68,14 +68,17 @@ class OrderProvider extends ChangeNotifier {
             .get();
         String address = user.docs.first['address'];
         print('address: ' + address);
-        myOrders.add(OrderModel(
-            address: address,
-            email: order['email'],
-            isComplete: order['isComplete'],
-            isUrgent: order['isUrgent'],
-            orderDate: order['orderDate'].toDate(),
-            totalCost: order['totalCost'].toDouble(),
-            items: itemsList));
+        if (itemsList.length > 0) {
+          myOrders.add(OrderModel(
+              address: address,
+              email: order['email'],
+              isComplete: order['isComplete'],
+              isUrgent: order['isUrgent'],
+              orderDate: order['orderDate'].toDate(),
+              totalCost: order['totalCost'].toDouble(),
+              items: itemsList));
+        }
+
         if (order['isComplete'] == false && order['isUrgent'] == true) {
           urgentPendingOrders.add(OrderModel(
               address: address,
