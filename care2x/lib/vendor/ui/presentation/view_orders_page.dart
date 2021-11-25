@@ -36,7 +36,7 @@ class _ViewOrdersPageState extends State<ViewOrdersPage> {
           backgroundColor: appBarColor,
         ),
         body: context.watch<OrderProvider>().gotOrders == true
-            ? (orders.length > 0
+            ? (context.watch<OrderProvider>().myOrders.length > 0
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 10),
@@ -47,14 +47,15 @@ class _ViewOrdersPageState extends State<ViewOrdersPage> {
                       itemCount: orders.length,
                     ),
                   )
-                : SpinKitCircle(
-                    color: Colors.black,
+                : Center(
+                    child: Text(
+                      'No Orders',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ))
-            : Center(
-                child: Text(
-                  'No Orders',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+            : SpinKitCircle(
+                color: Colors.black,
               ));
   }
 }

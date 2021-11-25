@@ -12,6 +12,7 @@ class OrderProvider extends ChangeNotifier {
 
   List<OrderModel> myOrders = [];
   List<ProductModel> myProducts = [];
+  List<OrderModel> urgentPendingOrders = [];
 
   OrderProvider({required this.vendorId});
 
@@ -73,6 +74,16 @@ class OrderProvider extends ChangeNotifier {
           orderDate: order['orderDate'].toDate(),
           totalCost: order['totalCost'].toDouble(),
           items: itemsList));
+      if (order['isComplete'] == false && order['isUrgent'] == true) {
+        urgentPendingOrders.add(OrderModel(
+            address: address,
+            email: order['email'],
+            isComplete: order['isComplete'],
+            isUrgent: order['isUrgent'],
+            orderDate: order['orderDate'].toDate(),
+            totalCost: order['totalCost'].toDouble(),
+            items: itemsList));
+      }
     }
 
     print('got my orders');
