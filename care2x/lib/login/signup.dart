@@ -1,6 +1,7 @@
 import 'package:care2x/login/next_pages/customer/customer_nextpage.dart';
 import 'package:care2x/login/next_pages/doctor/doctor_nextpage.dart';
 import 'package:care2x/session_repo.dart';
+import 'package:care2x/vendor/ui/presentation/vendor_home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,15 @@ class _SignUpState extends State<SignUp> {
             builder: (_) => BlocProvider(
               create: (context) => DocdetailsBloc(email: email.text.trim()),
               child: DoctorNextPage(),
+            ),
+          ),
+        );
+      } else if (isVendor == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VendorHomePage(
+              vendorId: userCredential.user!.uid.toString(),
             ),
           ),
         );
