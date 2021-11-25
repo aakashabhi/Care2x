@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else if (correctrecord['isVendor'] == true) {
         print('vendor it is');
-
+        print(coll.docs[0].id.toString());
         Navigator.push(
           context,
           MaterialPageRoute(

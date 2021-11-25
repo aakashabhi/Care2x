@@ -54,6 +54,7 @@ class _ViewProductsPageState extends State<ViewProductsPage> {
               : Center(
                   child: Text(
                     'No products to show',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ))
           : SpinKitCircle(
