@@ -1,6 +1,8 @@
 import 'package:care2x/constants/constants.dart';
 import 'package:care2x/vendor/models/order_model.dart';
+import 'package:care2x/vendor/provider/order_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailsPage extends StatefulWidget {
   final OrderModel order;
@@ -15,6 +17,8 @@ class OrderDetailsPage extends StatefulWidget {
 class _OrderDetailsPageState extends State<OrderDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    var orderWatchContext = context.watch<OrderProvider>();
+    var orderReadContext = context.read<OrderProvider>();
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
@@ -38,6 +42,34 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[500],
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: CheckboxListTile(
+                              title: Text(
+                                'Is Order Complete?',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: widget.order.isComplete,
+                              checkColor: Colors.white,
+                              activeColor: Colors.grey[500],
+                              onChanged: (val) {
+                                setState(() {
+                                  widget.order.isComplete = val!;
+                                  orderReadContext.orderComplete(
+                                      widget.order.orderId, val);
+                                });
+                              }),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
                             Icon(

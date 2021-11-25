@@ -3,8 +3,9 @@ import 'dart:core';
 import 'package:care2x/vendor/models/item_model.dart';
 
 class OrderModel {
+  final String orderId;
   final String email;
-  final bool isComplete;
+  bool isComplete;
   final bool isUrgent;
   final DateTime orderDate;
   final double totalCost;
@@ -12,7 +13,8 @@ class OrderModel {
   final List<ItemModel> items;
 
   OrderModel(
-      {required this.email,
+      {required this.orderId,
+      required this.email,
       required this.isComplete,
       required this.isUrgent,
       required this.orderDate,

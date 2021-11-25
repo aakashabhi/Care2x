@@ -1,6 +1,9 @@
+import 'package:care2x/Order_history/order_history.dart';
 import 'package:care2x/vendor/models/order_model.dart';
+import 'package:care2x/vendor/provider/order_provider.dart';
 import 'package:care2x/vendor/ui/presentation/order_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderModel order;
@@ -29,9 +32,12 @@ class OrderCard extends StatelessWidget {
               color: Colors.black,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => OrderDetailsPage(
-                          order: order,
-                          orderNo: index + 1,
+                    builder: (_) => ChangeNotifierProvider.value(
+                          value: context.read<OrderProvider>(),
+                          child: OrderDetailsPage(
+                            order: order,
+                            orderNo: index + 1,
+                          ),
                         )));
               },
               child: Text(

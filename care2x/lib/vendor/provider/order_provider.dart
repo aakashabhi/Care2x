@@ -70,6 +70,7 @@ class OrderProvider extends ChangeNotifier {
         print('address: ' + address);
         if (itemsList.length > 0) {
           myOrders.add(OrderModel(
+              orderId: order.id,
               address: address,
               email: order['email'],
               isComplete: order['isComplete'],
@@ -81,6 +82,7 @@ class OrderProvider extends ChangeNotifier {
 
         if (order['isComplete'] == false && order['isUrgent'] == true) {
           urgentPendingOrders.add(OrderModel(
+              orderId: order.id,
               address: address,
               email: order['email'],
               isComplete: order['isComplete'],
@@ -97,5 +99,10 @@ class OrderProvider extends ChangeNotifier {
     gotOrders = true;
     notifyListeners();
     return;
+  }
+
+  void orderComplete(String orderId, bool val) async {
+    await orderCollection.doc(orderId).update({'isComplete': val});
+    notifyListeners();
   }
 }
